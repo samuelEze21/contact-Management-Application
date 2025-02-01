@@ -15,7 +15,6 @@
     import java.util.Optional;
     import static org.junit.jupiter.api.Assertions.*;
 
-
     @SpringBootTest
     public class ContactServiceImplTest {
 
@@ -59,7 +58,7 @@
         }
 
         @Test
-        void test_that_user_can_get_Read_Contact_Added_by_Id() {
+        void test_that_user_can_Read_Contact_Added_by_Id() {
             ContactRequestDTO contactRequestDTO = new ContactRequestDTO();
             contactRequestDTO.setFirstName("Stan");
             contactRequestDTO.setLastName("Loski");

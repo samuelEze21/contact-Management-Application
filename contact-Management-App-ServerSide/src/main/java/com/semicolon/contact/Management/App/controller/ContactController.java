@@ -13,13 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/contact")
-@Validated
+@RequestMapping()
 public class ContactController {
 
     @Autowired
@@ -28,15 +26,15 @@ public class ContactController {
     private ContactRepository contactRepository;
 
 
-    @PostMapping("/register")
-    public ResponseEntity<ContactResponseDTO> createContact(@Valid @RequestBody ContactRequestDTO contactRequestDTO) {
+    @PostMapping("/register-contact")
+    public ResponseEntity<ContactResponseDTO> createContact(@RequestBody ContactRequestDTO contactRequestDTO) {
         ContactResponseDTO responseDTO = contactService.createContact(contactRequestDTO);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
 
-    @GetMapping("/getContactById/{id}")
-    public ResponseEntity<ContactResponseDTO> getContactById(@Valid @PathVariable
+    @GetMapping("/getContact/{id}")
+    public ResponseEntity<ContactResponseDTO> getContactById(@PathVariable
                                                                  @NotNull
                                                                  Long id) {
         ContactResponseDTO responseDTO = contactService.getContactById(id);
@@ -65,14 +63,13 @@ public class ContactController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/uploadPhoto/{id}")
+    @PostMapping("/upload-Photo/{id}")
     public ResponseEntity<ContactResponseDTO> uploadPhoto(
             @PathVariable @NotNull Long id,
             @RequestParam("photoUrl") @NotNull @Pattern(regexp = "^(http|https)://.*$") String photoUrl) {
         ContactResponseDTO responseDTO = contactService.uploadPhoto(id, photoUrl);
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
-
 
     @PutMapping("/updatePhoto/{id}")
     public ResponseEntity<ContactResponseDTO> updatePhoto(
@@ -81,7 +78,6 @@ public class ContactController {
         ContactResponseDTO responseDTO = contactService.updatePhoto(id, photoUrl);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
-
 
 
     @GetMapping("/getPhoto/{id}")

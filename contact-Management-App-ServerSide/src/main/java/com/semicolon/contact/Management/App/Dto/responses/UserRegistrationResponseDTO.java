@@ -1,10 +1,6 @@
 package com.semicolon.contact.Management.App.Dto.responses;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.List;
 
-//@Setter
-//@Getter
 public class UserRegistrationResponseDTO {
         private long id;
         private String email;
@@ -12,7 +8,36 @@ public class UserRegistrationResponseDTO {
         private String firstName;
         private String lastName;
         private String phone;
+        private String username;
         private String message;
+        private String token;
+
+        public List<String> getRoles() {
+                return roles;
+        }
+
+        public void setRoles(List<String> roles) {
+                this.roles = roles;
+        }
+
+        private List<String> roles;
+
+        public String getToken() {
+                return token;
+        }
+
+        public void setToken(String token) {
+                this.token = token;
+        }
+
+        public String getUsername() {
+                return username;
+        }
+
+        public void setUsername(String username) {
+                this.username = username;
+        }
+
 
         public long getId() {
                 return id;

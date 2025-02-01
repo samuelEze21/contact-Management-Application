@@ -1,14 +1,16 @@
 package com.semicolon.contact.Management.App.Dto.requests;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Builder;
 
-
+@Builder
 public class UserRegistrationRequestDTO {
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private String phone;
+    private String username;
+
+
 
     public String getEmail() {
         return email;
@@ -49,4 +51,13 @@ public class UserRegistrationRequestDTO {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }
