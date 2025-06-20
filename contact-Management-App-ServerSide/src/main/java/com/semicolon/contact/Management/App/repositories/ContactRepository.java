@@ -1,4 +1,4 @@
-package com.semicolon.contact.Management.App.models.repositories;
+package com.semicolon.contact.Management.App.repositories;
 import com.semicolon.contact.Management.App.models.entities.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

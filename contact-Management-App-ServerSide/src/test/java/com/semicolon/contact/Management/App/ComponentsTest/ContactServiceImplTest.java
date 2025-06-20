@@ -3,7 +3,7 @@
     import com.semicolon.contact.Management.App.Dto.responses.ContactResponseDTO;
     import com.semicolon.contact.Management.App.Exception.ContactNotFoundException;
     import com.semicolon.contact.Management.App.models.entities.Contact;
-    import com.semicolon.contact.Management.App.models.repositories.ContactRepository;
+    import com.semicolon.contact.Management.App.repositories.ContactRepository;
     import com.semicolon.contact.Management.App.services.ContactService;
     import jakarta.validation.ConstraintViolationException; // Use this import
     import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,6 @@
 
     import java.util.Optional;
     import static org.junit.jupiter.api.Assertions.*;
-
 
     @SpringBootTest
     public class ContactServiceImplTest {
@@ -59,7 +58,7 @@
         }
 
         @Test
-        void test_that_user_can_get_Read_Contact_Added_by_Id() {
+        void test_that_user_can_Read_Contact_Added_by_Id() {
             ContactRequestDTO contactRequestDTO = new ContactRequestDTO();
             contactRequestDTO.setFirstName("Stan");
             contactRequestDTO.setLastName("Loski");
