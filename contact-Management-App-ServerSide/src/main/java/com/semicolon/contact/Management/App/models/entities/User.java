@@ -53,13 +53,12 @@ public class User implements UserDetails {
     }
 
     //    @ElementCollection(fetch = FetchType.EAGER)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(
             name = "role_id", referencedColumnName = "id"))
-//    private List<String> roles = new ArrayList<>();
     private Set<Role> roles = new HashSet<>();
 
     private boolean tokenExpired;

@@ -87,7 +87,8 @@ public class AuthUserServiceImpl implements AuthUserService {
     //    registeredUser.setRoles(List.of(String.valueOf(Role.USER)));
 
 
-
+    @Override
+    @Transactional
     public AuthUserLoginResponseDto auth(AuthUserLoginDtoRequest authUserLoginDtoRequest) {
         // First authenticate the user
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
