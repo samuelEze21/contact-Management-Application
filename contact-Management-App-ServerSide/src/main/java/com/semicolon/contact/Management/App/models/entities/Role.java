@@ -1,10 +1,63 @@
 package com.semicolon.contact.Management.App.models.entities;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-public enum Role {
-    USER, ADMIN;
 
-    public String getName() {
-        return this.name();
+@Entity
+@Table(name = "roles")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(length = 20, nullable = false, unique = true)
+    @Enumerated(EnumType.STRING)
+    private AppRole name;
+
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
+
+
+    public Role(AppRole name) {
+        this.name = name;
     }
-}
+    public Role() {}
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public AppRole getName() {
+        return name;
+    }
+
+    public void setName(AppRole name) {
+        this.name = name;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+
+
+//    @ManyToMany
+//    @JoinTable(
+//            name = "roles_privileges",
+//            joinColumns = @JoinColumn(
+//                    name = "role_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(
+//                    name = "privilege_id", referencedColumnName = "id"))
+//    private Collection<Privilege> privileges;
+}

@@ -28,20 +28,18 @@ public class User implements UserDetails {
     private String email;
 
     @NotBlank
-    @Column(name="password", nullable = false, unique = true)
+    @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="first_name", nullable = false, unique = true)
+    @Column(name="first_name", nullable = false)
     @Size(min = 2, max = 30, message = "FirstName should have at least 2 characters")
     private String firstName;
 
-
-    @Column(name="last_name", nullable = false, unique = true)
+    @Column(name="last_name", nullable = false)
     @Size(min = 2, max = 30, message = "LastName should have at least 2 characters")
     private String lastName;
 
-
-    @Column(name="phone", nullable = false, unique = true)
+    @Column(name="phone", nullable = false)
     @Size(min = 7, max = 30, message = "PhoneNumber should have at least 7 characters")
     private String phone;
 
@@ -50,15 +48,34 @@ public class User implements UserDetails {
     @Size(min = 2, max = 30, message = "userName should have at least 2 characters")
     private String username;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> roles = new ArrayList<>();
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    //    @ElementCollection(fetch = FetchType.EAGER)
+    @ManyToMany
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(
+            name = "role_id", referencedColumnName = "id"))
+//    private List<String> roles = new ArrayList<>();
+    private Set<Role> roles = new HashSet<>();
+
+    private boolean tokenExpired;
+    private boolean isActive;
+
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority("USER")));
+        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName().name())));
         return authorities;
     }
+
+
 
     @Override
     public String getPassword() {
@@ -138,11 +155,4 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public List<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 }

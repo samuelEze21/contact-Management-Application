@@ -3,7 +3,7 @@
     import com.semicolon.contact.Management.App.Dto.responses.ContactResponseDTO;
     import com.semicolon.contact.Management.App.Exception.ContactNotFoundException;
     import com.semicolon.contact.Management.App.models.entities.Contact;
-    import com.semicolon.contact.Management.App.models.repositories.ContactRepository;
+    import com.semicolon.contact.Management.App.repositories.ContactRepository;
     import com.semicolon.contact.Management.App.services.ContactService;
     import jakarta.validation.ConstraintViolationException; // Use this import
     import org.junit.jupiter.api.BeforeEach;

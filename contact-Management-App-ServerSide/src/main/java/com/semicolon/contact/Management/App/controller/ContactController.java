@@ -4,7 +4,7 @@ import com.semicolon.contact.Management.App.Dto.requests.ContactRequestDTO;
 import com.semicolon.contact.Management.App.Dto.responses.ContactResponseDTO;
 import com.semicolon.contact.Management.App.Exception.ContactNotFoundException;
 import com.semicolon.contact.Management.App.models.entities.Contact;
-import com.semicolon.contact.Management.App.models.repositories.ContactRepository;
+import com.semicolon.contact.Management.App.repositories.ContactRepository;
 import com.semicolon.contact.Management.App.services.ContactService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/contacts")
 public class ContactController {
 
     @Autowired

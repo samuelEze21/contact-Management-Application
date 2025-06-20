@@ -28,7 +28,7 @@ public class Contact {
         this.photoUrl = photoUrl;
     }
 
-    @Column(name = "photo_url") // return/ map explicitly to match database column
+    @Column(name = "photo_url")
     private String photoUrl;
 
     public Long getId() {

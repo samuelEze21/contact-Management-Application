@@ -16,6 +16,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -36,13 +37,18 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(httpRequest -> {
-                    httpRequest.requestMatchers("/register", "/auth").permitAll();
-                    httpRequest.requestMatchers("/register-contact", "/getContact/{id}",
-                            "/getAllContacts", "/updateContact/{id}","/deleteContactById{id}",
-                            "/upload-Photo/{id}", "/updatePhoto/{id}", "/getPhoto/{id}").permitAll();
-
-                    httpRequest.requestMatchers(HttpMethod.POST,  "/api/admin/**").hasAuthority("ADMIN");
-
+                    httpRequest.requestMatchers("/api/auth/**", "/register", "/auth").permitAll();
+                    httpRequest.requestMatchers(
+                            "/api/contacts/**",
+                            "/register-contact",
+                            "/getContact/**",
+                            "/getAllContacts",
+                            "/updateContact/**",
+                            "/deleteContactById/**",
+                            "/upload-Photo/**",
+                            "/updatePhoto/**",
+                            "/getPhoto/**"
+                    ).authenticated();
                     httpRequest.anyRequest().authenticated();
                 })
                 .sessionManagement(session ->
@@ -56,22 +62,71 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "http://localhost:5173",  // Development
+                "https://your-production-domain.com" // Add your production domain
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
-        configuration.addAllowedHeader("*");
+        configuration.setAllowedHeaders(Arrays.asList(
+                "Authorization",
+                "Content-Type",
+                "Accept",
+                "X-Requested-With"
+        ));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
 
-    
 }
 
 
 
 
 
+
+
+//
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource(){
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(List.of("http://localhost:5175"));
+//        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        configuration.setAllowCredentials(true);
+//        configuration.addAllowedHeader("*");
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
+
+
+
+
+//
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf(AbstractHttpConfigurer::disable)
+//                .cors(Customizer.withDefaults())
+//                .authorizeHttpRequests(httpRequest -> {
+//                    httpRequest.requestMatchers("/register", "/auth").permitAll();
+//                    httpRequest.requestMatchers("/register-contact", "/getContact/{id}",
+//                            "/getAllContacts", "/updateContact/{id}","/deleteContactById{id}",
+//                            "/upload-Photo/{id}", "/updatePhoto/{id}", "/getPhoto/{id}").permitAll();
+//
+//                    httpRequest.requestMatchers(HttpMethod.POST,  "/api/admin/**").hasAuthority("ADMIN");
+//
+//                    httpRequest.anyRequest().authenticated();
+//                })
+//                .sessionManagement(session ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+//                .authenticationProvider(authenticationProvider);
+//        return http.build();
+//    }
 
 
 
@@ -96,24 +151,3 @@ public class SecurityConfig {
 
 
 
-
-
-//
-//
-//@Bean
-//public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//    http.csrf(AbstractHttpConfigurer::disable)
-//            .authorizeHttpRequests(httpRequest -> {
-//                httpRequest.requestMatchers("/register", "/auth")
-//                        .permitAll();
-//                httpRequest.requestMatchers(HttpMethod.POST)
-//                        .hasAnyAuthority("ADMIN")
-//                        .anyRequest()
-//                        .authenticated();
-
-
-//            }).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-//            .authenticationProvider(authenticationProvider);
-//    return http.build();
-//}

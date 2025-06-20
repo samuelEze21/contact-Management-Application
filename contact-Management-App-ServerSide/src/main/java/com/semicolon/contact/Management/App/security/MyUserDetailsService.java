@@ -1,7 +1,7 @@
 package com.semicolon.contact.Management.App.security;
 
 import com.semicolon.contact.Management.App.models.entities.User;
-import com.semicolon.contact.Management.App.models.repositories.UserRepository;
+import com.semicolon.contact.Management.App.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
